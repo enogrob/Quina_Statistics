@@ -1,0 +1,30 @@
+---
+title: "Quina"
+author: "Roberto Nogueira"
+date: "January 11, 2015"
+output: html_document
+---
+
+![course logo](images/getting_and_cleaning_data.jpg)`
+
+### Getting and cleaning data
+
+#### SOLUTION:
+1. Download the file:
+```{r}
+fileUrl <- "http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_quina.zip"
+download.file(fileUrl,destfile="D_quina.zip", method="wget")
+dateDownloaded <- date()
+```
+
+2. Check if the file was downloaded:
+```{r}
+list.files(pattern="D_quina.zip")
+```
+
+4. Parse the file:
+```{r}
+library(XML)
+doc <- htmlTreeParse("D_QUINA.HTM",useInternal=TRUE)
+xpathSApply(doc,"//tr",xmlValue)
+```
