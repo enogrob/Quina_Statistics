@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "January 11, 2015"
+date: "January 17, 2015"
 output: html_document
 ---
 
@@ -20,6 +20,12 @@ dateDownloaded <- date()
 2. Check if the file was downloaded:
 ```{r}
 list.files(pattern="D_quina.zip")
+```
+
+3. Unzip the file that was downloaded:
+```{r}
+unzip("data/D_quina.zip")
+list.files(pattern="D_QUINA.HTM")
 ```
 
 4. Parse the file:
