@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "January 22, 2015"
+date: "January 23, 2015"
 output: html_document
 ---
 
@@ -54,9 +54,12 @@ columnnames <- unname(sapply(headers, function(x) x$children$small$children$font
 # Get rows from table
 content <- c()
 concurso <- c()
+qConcurso <- c()
+dDate <- c()
 for(i in 2:length(thetable$children))
 {
-   concurso <- c(concurso, thetable$children[[i]]$children$td$children$text$value)
+   qConcurso <- c(qConcurso, thetable$children[[i]]$children$td$children$text$value)
+   qDate <- c(qDate, thetable$children[[i]]$children$td$children$text$value)
 }
 
 # Convert to data frame
