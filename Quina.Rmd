@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "January 23, 2015"
+date: "January 26, 2015"
 output: html_document
 ---
 
@@ -52,17 +52,26 @@ headers <- thetable$children[[1]]$children
 columnnames <- unname(sapply(headers, function(x) x$children$small$children$font$children$text))
 
 # Get rows from table
-content <- c()
-concurso <- c()
-qConcurso <- c()
-dDate <- c()
+vConcurso <- c()
+vDate <- c()
+vDezena1 <-c()
+vDezena2 <-c()
+vDezena3 <-c()
+vDezena4 <-c()
+vDezena5 <-c()
 for(i in 2:length(thetable$children))
 {
-   qConcurso <- c(qConcurso, thetable$children[[i]]$children$td$children$text$value)
-   qDate <- c(qDate, thetable$children[[i]]$children$td$children$text$value)
+   if (!is.null(thetable$children[[i]]$children$td$children$text$value)) {
+     vConcurso <- c(vConcurso, thetable$children[[i]]$children$td$children$text$value)
+     vDate <- c(vDate, thetable$children[[i]]$children[[2]]$children$text$value)
+     vDezena1 <- c(vDezena1, thetable$children[[i]]$children[[3]]$children$text$value)
+     vDezena2 <- c(vDezena2, thetable$children[[i]]$children[[4]]$children$text$value)
+     vDezena3 <- c(vDezena3, thetable$children[[i]]$children[[5]]$children$text$value)
+     vDezena4 <- c(vDezena4, thetable$children[[i]]$children[[6]]$children$text$value)
+     vDezena5 <- c(vDezena5, thetable$children[[i]]$children[[7]]$children$text$value)
+   }
 }
 
 # Convert to data frame
-colnames(content) <- columnnames
-as.data.frame(content)
+dfquina <- data.frame(vConcurso, as.date(vDate), vDezena1, vDezena2, vDezena3, vDezena4, vDezena5)
 ```
