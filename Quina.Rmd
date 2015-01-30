@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "January 28, 2015"
+date: "January 30, 2015"
 output: html_document
 ---
 
@@ -11,19 +11,25 @@ output: html_document
 
 #### SOLUTION:
 1. Download the file:
-```{r eval=FALSE}
+```{r}
+fz <- "data/D_quina.zip"
+fn <- "data/D_QUINA.HTM"
+if (file.exists(fz)) file.remove(fz)
+if (file.exists(fn)) file.remove(fn)
 fileUrl <- "http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_quina.zip"
-download.file(fileUrl,destfile="D_quina.zip", method="wget")
+download.file(fileUrl,destfile="data/D_quina.zip", method="wget")
 dateDownloaded <- date()
 ```
 
 2. Check if the file was downloaded:
 ```{r}
+setwd("data")
 list.files(pattern="D_quina.zip")
+setwd("../")
 ```
 
 3. Unzip the file that was downloaded:
-```{r eval=FALSE}
+```{r}
 unzip("data/D_quina.zip", exdir="data")
 ```
 
@@ -35,7 +41,7 @@ setwd("../")
 ```
 
 5. Parse the file:
-```{r}
+```{r eval=FALSE}
 webpage <- readLines("data/D_QUINA.HTM")
 
 # Parse the html tree, ignoring errors on the page
@@ -61,17 +67,22 @@ vDezena4 <-c()
 vDezena5 <-c()
 for(i in 2:length(thetable$children))
 {
-   if (!is.null(thetable$children[[i]]$children$td$children$text$value)) {
-     vConcurso <- c(vConcurso, thetable$children[[i]]$children$td$children$text$value)
+     if(is.null(thetable$children[[i]]$children$td$children$text$value)) {
+       next()
+     }
+     if(is.na(as.numeric(thetable$children[[i]]$children$td$children$text$value))) {
+       next()
+     }
+     vConcurso <- c(vConcurso, as.numeric(thetable$children[[i]]$children$td$children$text$value))
      vDate <- c(vDate, thetable$children[[i]]$children[[2]]$children$text$value)
      vDezena1 <- c(vDezena1, thetable$children[[i]]$children[[3]]$children$text$value)
      vDezena2 <- c(vDezena2, thetable$children[[i]]$children[[4]]$children$text$value)
      vDezena3 <- c(vDezena3, thetable$children[[i]]$children[[5]]$children$text$value)
      vDezena4 <- c(vDezena4, thetable$children[[i]]$children[[6]]$children$text$value)
      vDezena5 <- c(vDezena5, thetable$children[[i]]$children[[7]]$children$text$value)
-   }
 }
 
 # Convert to data frame
-dfquina <- data.frame(vConcurso, as.date(vDate), vDezena1, vDezena2, vDezena3, vDezena4, vDezena5)
+dfQuina <- data.frame(vConcurso, vDate, vDezena1, vDezena2, vDezena3, vDezena4, vDezena5)
+names(dfQuina) <- c("concurso", "data", "d01", "d02", "d03", "d04", "d05")
 ```
