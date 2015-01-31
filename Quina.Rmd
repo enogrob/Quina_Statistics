@@ -86,3 +86,8 @@ for(i in 2:length(thetable$children))
 dfQuina <- data.frame(vConcurso, vDate, vDezena1, vDezena2, vDezena3, vDezena4, vDezena5)
 names(dfQuina) <- c("concurso", "data", "d01", "d02", "d03", "d04", "d05")
 ```
+```
+library(dplyr)
+tblQuina <- tbl_df(dfQuina)
+tblQuina
+```
