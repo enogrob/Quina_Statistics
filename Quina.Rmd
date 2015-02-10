@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "February 09, 2015"
+date: "February 10, 2015"
 output: html_document
 ---
 
@@ -74,12 +74,12 @@ for(i in 2:length(thetable$children))
        next()
      }
      vConcurso <- c(vConcurso, as.numeric(thetable$children[[i]]$children$td$children$text$value))
-     vDate <- c(vDate, thetable$children[[i]]$children[[2]]$children$text$value)
-     vDezena1 <- c(vDezena1, thetable$children[[i]]$children[[3]]$children$text$value)
-     vDezena2 <- c(vDezena2, thetable$children[[i]]$children[[4]]$children$text$value)
-     vDezena3 <- c(vDezena3, thetable$children[[i]]$children[[5]]$children$text$value)
-     vDezena4 <- c(vDezena4, thetable$children[[i]]$children[[6]]$children$text$value)
-     vDezena5 <- c(vDezena5, thetable$children[[i]]$children[[7]]$children$text$value)
+     vDate <- c(vDate, as.Date(thetable$children[[i]]$children[[2]]$children$text$value, "%d/%m/%Y"))
+     vDezena1 <- c(vDezena1, as.numeric(thetable$children[[i]]$children[[3]]$children$text$value))
+     vDezena2 <- c(vDezena2, as.numeric(thetable$children[[i]]$children[[4]]$children$text$value))
+     vDezena3 <- c(vDezena3, as.numeric(thetable$children[[i]]$children[[5]]$children$text$value))
+     vDezena4 <- c(vDezena4, as.numeric(thetable$children[[i]]$children[[6]]$children$text$value))
+     vDezena5 <- c(vDezena5, as.numeric(thetable$children[[i]]$children[[7]]$children$text$value))
 }
 
 # Convert to data frame
