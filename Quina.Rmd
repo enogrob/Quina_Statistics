@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "February 10, 2015"
+date: "February 11, 2015"
 output: html_document
 ---
 
@@ -81,6 +81,8 @@ for(i in 2:length(thetable$children))
      vDezena4 <- c(vDezena4, as.numeric(thetable$children[[i]]$children[[6]]$children$text$value))
      vDezena5 <- c(vDezena5, as.numeric(thetable$children[[i]]$children[[7]]$children$text$value))
 }
+
+class(vDate) <- "Date"
 
 # Convert to data frame
 dfQuina <- data.frame(vConcurso, vDate, vDezena1, vDezena2, vDezena3, vDezena4, vDezena5)
