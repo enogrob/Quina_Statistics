@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "February 11, 2015"
+date: "February 12, 2015"
 output: html_document
 ---
 
@@ -41,7 +41,7 @@ setwd("../")
 ```
 
 5. Parse the file:
-```{r eval=FALSE}
+```{r}
 webpage <- readLines("data/D_QUINA.HTM")
 
 # Parse the html tree, ignoring errors on the page
@@ -90,5 +90,13 @@ names(dfQuina) <- c("concurso", "data", "d01", "d02", "d03", "d04", "d05")
 ```{r} 
 library(dplyr)
 tblQuina <- tbl_df(dfQuina)
-tblQuina
+tail(tblQuina)
+```
+
+# List frequency of the tens
+```{r} 
+dfQuinaFreq <- as.data.frame(table(c(tblQuina$d01, tblQuina$d02, tblQuina$d03, tblQuina$d04, tblQuina$d05)))
+tblQuinaFreq <- tbl_df(dfQuinaFreq)
+tblQuinaFreq
+arrange(tblQuinaFreq, desc(Freq))
 ```
