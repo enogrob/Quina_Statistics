@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "February 13, 2015"
+date: "February 16, 2015"
 output: html_document
 ---
 
@@ -93,10 +93,15 @@ tblQuina <- tbl_df(dfQuina)
 tail(tblQuina)
 ```
 
-# List frequency of the tens
+6. List frequency of the tens
 ```{r} 
 dfQuinaFreq <- as.data.frame(table(c(tblQuina$d01, tblQuina$d02, tblQuina$d03, tblQuina$d04, tblQuina$d05)))
 tblQuinaFreq <- tbl_df(dfQuinaFreq)
-tblQuinaFreq
 arrange(tblQuinaFreq, desc(Freq))
+```
+
+7. Checking the results according to a certain `concurso`.
+```{r}
+arg1 <- 3712 
+filter(tblQuina, concurso == arg1)
 ```
