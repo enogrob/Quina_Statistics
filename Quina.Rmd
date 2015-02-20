@@ -58,13 +58,13 @@ for(i in 2:length(thetable$children))
      if(is.na(suppressWarnings(as.numeric(thetable$children[[i]]$children$td$children$text$value)))) {
        next()
      }
-     vConcurso <- c(vConcurso, suppressWarnings(as.numeric(thetable$children[[i]]$children$td$children$text$value)))
+     vConcurso <- c(vConcurso, as.numeric(thetable$children[[i]]$children$td$children$text$value))
      vDate <- c(vDate, as.Date(thetable$children[[i]]$children[[2]]$children$text$value, "%d/%m/%Y"))
-     vDezena1 <- c(vDezena1, suppressWarnings(as.numeric(thetable$children[[i]]$children[[3]]$children$text$value)))
-     vDezena2 <- c(vDezena2, suppressWarnings(as.numeric(thetable$children[[i]]$children[[4]]$children$text$value)))
-     vDezena3 <- c(vDezena3, suppressWarnings(as.numeric(thetable$children[[i]]$children[[5]]$children$text$value)))
-     vDezena4 <- c(vDezena4, suppressWarnings(as.numeric(thetable$children[[i]]$children[[6]]$children$text$value)))
-     vDezena5 <- c(vDezena5, suppressWarnings(as.numeric(thetable$children[[i]]$children[[7]]$children$text$value)))
+     vDezena1 <- c(vDezena1, as.numeric(thetable$children[[i]]$children[[3]]$children$text$value))
+     vDezena2 <- c(vDezena2, as.numeric(thetable$children[[i]]$children[[4]]$children$text$value))
+     vDezena3 <- c(vDezena3, as.numeric(thetable$children[[i]]$children[[5]]$children$text$value))
+     vDezena4 <- c(vDezena4, as.numeric(thetable$children[[i]]$children[[6]]$children$text$value))
+     vDezena5 <- c(vDezena5, as.numeric(thetable$children[[i]]$children[[7]]$children$text$value))
 }
 
 class(vDate) <- "Date"
