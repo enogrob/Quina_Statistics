@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "February 16, 2015"
+date: "February 20, 2015"
 output: html_document
 ---
 
@@ -14,33 +14,18 @@ output: html_document
 ```{r}
 fz <- "data/D_quina.zip"
 fn <- "data/D_QUINA.HTM"
-if (file.exists(fz)) file.remove(fz)
-if (file.exists(fn)) file.remove(fn)
-fileUrl <- "http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_quina.zip"
-download.file(fileUrl,destfile="data/D_quina.zip", method="wget")
-dateDownloaded <- date()
+if (file.exists(fn)) {
+  if (difftime(Sys.time(),file.info(fz)$ctime, units="days") > 2) {
+    file.remove(fz)
+    file.remove(fn)
+    fileUrl <- "http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_quina.zip"
+    download.file(fileUrl,destfile="data/D_quina.zip", method="wget")
+    unzip("data/D_quina.zip", exdir="data")
+  }
+}
 ```
 
-2. Check if the file was downloaded:
-```{r}
-setwd("data")
-list.files(pattern="D_quina.zip")
-setwd("../")
-```
-
-3. Unzip the file that was downloaded:
-```{r}
-unzip("data/D_quina.zip", exdir="data")
-```
-
-4. Check if the file was unzipped:
-```{r}
-setwd("data")
-list.files(pattern="D_QUINA.HTM")
-setwd("../")
-```
-
-5. Parse the file:
+2. Parse the file:
 ```{r}
 webpage <- readLines("data/D_QUINA.HTM")
 
@@ -70,16 +55,16 @@ for(i in 2:length(thetable$children))
      if(is.null(thetable$children[[i]]$children$td$children$text$value)) {
        next()
      }
-     if(is.na(as.numeric(thetable$children[[i]]$children$td$children$text$value))) {
+     if(is.na(suppressWarnings(as.numeric(thetable$children[[i]]$children$td$children$text$value)))) {
        next()
      }
-     vConcurso <- c(vConcurso, as.numeric(thetable$children[[i]]$children$td$children$text$value))
+     vConcurso <- c(vConcurso, suppressWarnings(as.numeric(thetable$children[[i]]$children$td$children$text$value)))
      vDate <- c(vDate, as.Date(thetable$children[[i]]$children[[2]]$children$text$value, "%d/%m/%Y"))
-     vDezena1 <- c(vDezena1, as.numeric(thetable$children[[i]]$children[[3]]$children$text$value))
-     vDezena2 <- c(vDezena2, as.numeric(thetable$children[[i]]$children[[4]]$children$text$value))
-     vDezena3 <- c(vDezena3, as.numeric(thetable$children[[i]]$children[[5]]$children$text$value))
-     vDezena4 <- c(vDezena4, as.numeric(thetable$children[[i]]$children[[6]]$children$text$value))
-     vDezena5 <- c(vDezena5, as.numeric(thetable$children[[i]]$children[[7]]$children$text$value))
+     vDezena1 <- c(vDezena1, suppressWarnings(as.numeric(thetable$children[[i]]$children[[3]]$children$text$value)))
+     vDezena2 <- c(vDezena2, suppressWarnings(as.numeric(thetable$children[[i]]$children[[4]]$children$text$value)))
+     vDezena3 <- c(vDezena3, suppressWarnings(as.numeric(thetable$children[[i]]$children[[5]]$children$text$value)))
+     vDezena4 <- c(vDezena4, suppressWarnings(as.numeric(thetable$children[[i]]$children[[6]]$children$text$value)))
+     vDezena5 <- c(vDezena5, suppressWarnings(as.numeric(thetable$children[[i]]$children[[7]]$children$text$value)))
 }
 
 class(vDate) <- "Date"
@@ -93,14 +78,14 @@ tblQuina <- tbl_df(dfQuina)
 tail(tblQuina)
 ```
 
-6. List frequency of the tens
+3. List frequency of the tens
 ```{r} 
 dfQuinaFreq <- as.data.frame(table(c(tblQuina$d01, tblQuina$d02, tblQuina$d03, tblQuina$d04, tblQuina$d05)))
 tblQuinaFreq <- tbl_df(dfQuinaFreq)
 arrange(tblQuinaFreq, desc(Freq))
 ```
 
-7. Checking the results according to a certain `concurso`.
+4. Checking the results according to a certain `concurso`.
 ```{r}
 arg1 <- 3712 
 filter(tblQuina, concurso == arg1)
