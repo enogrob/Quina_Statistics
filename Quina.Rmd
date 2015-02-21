@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "February 20, 2015"
+date: "February 21, 2015"
 output: html_document
 ---
 
@@ -15,7 +15,7 @@ output: html_document
 fz <- "data/D_quina.zip"
 fn <- "data/D_QUINA.HTM"
 if (file.exists(fn)) {
-  if (difftime(Sys.time(),file.info(fz)$ctime, units="days") > 2) {
+  if (difftime(Sys.time(),file.info(fz)$ctime, units="days") > 1) {
     file.remove(fz)
     file.remove(fn)
     fileUrl <- "http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_quina.zip"
@@ -80,12 +80,18 @@ tail(tblQuina)
 
 3. List frequency of the tens
 ```{r} 
-dfQuinaFreq <- as.data.frame(table(c(tblQuina$d01, tblQuina$d02, tblQuina$d03, tblQuina$d04, tblQuina$d05)))
+counts <- table(c(tblQuina$d01, tblQuina$d02, tblQuina$d03, tblQuina$d04, tblQuina$d05))
+dfQuinaFreq <- as.data.frame(counts)
 tblQuinaFreq <- tbl_df(dfQuinaFreq)
 arrange(tblQuinaFreq, desc(Freq))
 ```
 
-4. Checking the results according to a certain `concurso`.
+4. Barplot Occurrences
+```{r}
+barplot(counts, main="Occurrences", xlab="Tens")
+```
+
+5. Checking the results according to a certain `concurso`.
 ```{r}
 arg1 <- 3712 
 filter(tblQuina, concurso == arg1)
