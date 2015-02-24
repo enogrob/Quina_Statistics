@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "February 23, 2015"
+date: "February 24, 2015"
 output: html_document
 ---
 
@@ -95,4 +95,11 @@ barplot(counts, col = rainbow(20), main="Occurrences", xlab="Tens")
 ```{r}
 arg1 <- 3712 
 filter(tblQuina, concurso == arg1)
+```
+
+6. Selecting Quinas according to the Zodiac Signs
+```{r}
+# Pisces: February 21 ??? March 20
+library(sqldf)
+sqldf("select d01,d02,d03,d05 from tblQuina")
 ```
