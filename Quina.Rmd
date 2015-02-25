@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "February 24, 2015"
+date: "February 25, 2015"
 output: html_document
 ---
 
@@ -100,6 +100,6 @@ filter(tblQuina, concurso == arg1)
 6. Selecting Quinas according to the Zodiac Signs
 ```{r}
 # Pisces: February 21 ??? March 20
-library(sqldf)
-sqldf("select d01,d02,d03,d05 from tblQuina")
+library(lubridate)
+tblQuina[ (month(as.POSIXlt(data)) >= 2 & day(as.POSIXlt(data)) >= 21) & (month(as.POSIXlt(data)) <= 3 & day(as.POSIXlt(data)) <= 20),]
 ```
