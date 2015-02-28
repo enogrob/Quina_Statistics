@@ -1,7 +1,7 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "February 27, 2015"
+date: "February 28, 2015"
 output: html_document
 ---
 
@@ -101,5 +101,4 @@ filter(tblQuina, concurso == arg1)
 ```{r}
 # Pisces: February 21 ??? March 20
 library(lubridate)
-tblQuina[ (month(as.POSIXlt(data)) >= 2 & day(as.POSIXlt(data)) >= 21) & (month(as.POSIXlt(data)) <= 3 & day(as.POSIXlt(data)) <= 20),]
 ```
