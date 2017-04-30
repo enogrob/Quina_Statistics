@@ -1,15 +1,21 @@
 ---
 title: "Quina"
 author: "Roberto Nogueira"
-date: "October 01, 2015"
 output: html_document
 ---
 
-![course logo](images/getting_and_cleaning_data.jpg)`
+![course logo](/Users/enogrob/Things/Projects/project-loterias-r/images/project.png)`
 
 ### Getting and cleaning data
 
 #### SOLUTION:
+1. Preparation
+```{r}
+getwd()
+setwd("/Users/enogrob/Things/Projects/project-loterias-r/src")
+getwd()
+```
+
 1. Download the file:
 ```{r}
 fz <- "data/D_quina.zip"
@@ -18,11 +24,11 @@ if (file.exists(fn)) {
   if (difftime(Sys.time(),file.info(fz)$ctime, units="days") > 1) {
     file.remove(fz)
     file.remove(fn)
-    fileUrl <- "http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_quina.zip"
-    download.file(fileUrl,destfile="data/D_quina.zip", method="wget")
-    unzip("data/D_quina.zip", exdir="data")
   }
 }
+fileUrl <- "http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_quina.zip"
+download.file(fileUrl,destfile="data/D_quina.zip", method="wget")
+unzip("data/D_quina.zip", exdir="data")
 ```
 
 2. Parse the file:
@@ -101,4 +107,17 @@ filter(tblQuina, concurso == arg1)
 ```{r}
 # Pisces: February 21 ??? March 20
 library(lubridate)
+```
+
+7. Generating a sample Quina
+```{r}
+quina <- function(n) {
+  return(sort(sample(80, n)))
+}
+```
+
+8. Sum Quina members
+```{r}
+q = quina(5)
+sum(q)
 ```
